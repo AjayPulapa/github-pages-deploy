@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyDocs</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⬡</span>
+        <a href="index.html" class="logo-text">MyDocs</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="header-nav" id="headerNav">
+        <a href="index.html"            class="nav-link" data-page="home">Home</a>
+        <a href="?page=getting-started" class="nav-link" data-page="getting-started">Getting Started</a>
+        <a href="?page=guide"           class="nav-link" data-page="guide">Guide</a>
+        <a href="?page=api"             class="nav-link" data-page="api">API</a>
+        <a href="?page=faq"             class="nav-link" data-page="faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <h4 class="sidebar-heading">📚 Documentation</h4>
+        <ul>
+          <li><a href="index.html"            class="sidebar-link" data-page="home">🏠 Home</a></li>
+          <li><a href="?page=getting-started" class="sidebar-link" data-page="getting-started">🚀 Getting Started</a></li>
+          <li><a href="?page=guide"           class="sidebar-link" data-page="guide">📖 Full Guide</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <h4 class="sidebar-heading">🔧 Reference</h4>
+        <ul>
+          <li><a href="?page=api" class="sidebar-link" data-page="api">⚙️ API Reference</a></li>
+          <li><a href="?page=faq" class="sidebar-link" data-page="faq">❓ FAQ</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <h4 class="sidebar-heading">🌐 External</h4>
+        <ul>
+          <li><a href="https://github.com" class="sidebar-link" target="_blank">GitHub ↗</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+      <nav class="quick-nav" id="quickNav" aria-label="Quick navigation">
+        <span class="quick-nav-label">Quick Nav:</span>
+        <span class="quick-nav-links" id="quickNavLinks"></span>
+      </nav>
+
+      <div id="errorState" class="error-state" style="display:none;">
+        <p>⚠️ Page not found. <a href="index.html">Go home</a></p>
+      </div>
+
+      <article class="page-article md-body" id="mdContent"></article>
+
+      <a href="#" class="back-to-top">↑ Top</a>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand"><span class="logo-icon">⬡</span> MyDocs — Built with GitHub Pages</div>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="?page=getting-started">Getting Started</a>
+        <a href="?page=guide">Guide</a>
+        <a href="?page=api">API</a>
+        <a href="?page=faq">FAQ</a>
+      </nav>
+      <p class="footer-copy">© 2026 MyDocs. Released under MIT License.</p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       INLINE MARKDOWN PAGES
+       To edit a page: update the text inside the matching script tag.
+       To add a page:  add a new <script id="md-yourpage"> block,
+                       then add a nav link with data-page="yourpage".
+  ════════════════════════════════════════════════════════════════ -->
+
+  <script id="md-home" type="text/markdown">
+# Welcome to MyDocs
+
+> A clean, responsive documentation site powered by GitHub Pages.
+
+## What is this?
+
+MyDocs is a lightweight documentation template built with pure HTML, CSS, and JavaScript. All content is written in **Markdown** and rendered live in the browser — no build step, no framework, no server needed.
+
+## Features
+
+- 📱 **Fully Responsive** — Works on mobile, tablet, and desktop
+- 🧭 **Quick Navigation** — Jump between sections instantly
+- 📝 **Markdown-Powered** — Write content in plain Markdown
+- 🎨 **Clean Design** — Readable typography with a sharp minimal aesthetic
+- ⚡ **Fast & Lightweight** — Zero JS frameworks, pure static performance
+
+## How It Works
+
+All pages live as inline Markdown blocks inside `index.html`. Clicking a nav link updates the URL (`?page=name`) and swaps the rendered content — no page reload, no server needed.
+
+## Project Layout
+
+```
+yourrepo/
+├── index.html        ← Everything lives here
+├── assets/
+│   ├── css/style.css
+│   └── js/main.js
+└── pages/
+    ├── home.md
+    ├── getting-started.md
+    ├── guide.md
+    ├── api.md
+    └── faq.md
+```
+
+## Next Steps
+
+- Read the [Getting Started](?page=getting-started) guide
+- Explore the [Full Guide](?page=guide)
+- Check the [API Reference](?page=api)
+- Browse the [FAQ](?page=faq)
+  </script>
+
+  <script id="md-getting-started" type="text/markdown">
+# Getting Started
+
+> Set up your GitHub Pages site in under 5 minutes.
+
+## Prerequisites
+
+- A GitHub account
+- Git installed locally
+- Basic knowledge of HTML/CSS
+
+## Installation
+
+Clone or fork this repository to get started:
+
+```bash
+git clone https://github.com/yourusername/yourrepo.git
+cd yourrepo
+```
+
+## Configuration
+
+Edit the Markdown blocks inside the `<script type="text/markdown">` tags in `index.html` to update any page's content. To change the nav links, update the `data-page` attributes and `href` values in the header and sidebar.
+
+> 💡 All styles live in `assets/css/style.css` and all JS in `assets/js/main.js` — edit once, applies everywhere.
+
+## Deploy to GitHub Pages
+
+1. Push your code to GitHub: `git push origin main`
+2. Go to your repo → **Settings → Pages**
+3. Set source to **main branch / root folder**
+4. Your site is live at `https://username.github.io/repo/`
+  </script>
+
+  <script id="md-guide" type="text/markdown">
+# Full Guide
+
+> Everything you need to customize and extend your site.
+
+## Project Structure
+
+```
+yourrepo/
+├── index.html          ← Single file — all pages live here
+├── assets/
+│   ├── css/style.css   ← All styles + CSS variables
+│   └── js/main.js      ← Nav toggle, scroll-spy, copy buttons
+└── pages/
+    ├── home.md
+    ├── getting-started.md
+    ├── guide.md
+    ├── api.md
+    └── faq.md
+```
+
+## Adding New Pages
+
+1. Add a new inline block at the bottom of `index.html`:
+
+```html
+<script id="md-yourpage" type="text/markdown">
+# Your Page Title
+Your content here...
+</script>
+```
+
+2. Add nav links in the header and sidebar:
+
+```html
+<a href="?page=yourpage" data-page="yourpage">Your Page</a>
+```
+
+That's it — no other changes needed.
+
+## Styling
+
+All design tokens are CSS variables in `:root` inside `style.css`. Change `--accent` to instantly retheme the whole site:
+
+```css
+:root {
+  --accent: #00e5ff;    /* primary color */
+  --accent2: #7c3aed;   /* secondary color */
+  --bg: #0d0f14;        /* background */
+}
+```
+
+## Markdown Tips
+
+All standard Markdown is supported:
+
+- **Bold**, *italic*, `inline code`
+- `#` `##` `###` for headings
+- Unordered and ordered lists
+- Fenced code blocks with language label
+- Blockquotes with `>` (rendered as info boxes)
+- Tables (see API page for an example)
+- Hyperlinks: `[text](url)`
+  </script>
+
+  <script id="md-api" type="text/markdown">
+# API Reference
+
+> Configuration reference for `index.html`.
+
+## Overview
+
+This is a fully static site — there are no backend endpoints or network requests. The "API" here refers to the conventions used inside `index.html` to add and configure pages.
+
+## Page ID Convention
+
+Every page needs a matching `<script>` tag with an `id` of `md-{pagename}`:
+
+```html
+<script id="md-home"             type="text/markdown"> ... </script>
+<script id="md-getting-started"  type="text/markdown"> ... </script>
+<script id="md-guide"            type="text/markdown"> ... </script>
+<script id="md-api"              type="text/markdown"> ... </script>
+<script id="md-faq"              type="text/markdown"> ... </script>
+```
+
+## URL Pattern
+
+| URL | Page shown |
+|-----|-----------|
+| `index.html` | Home (`md-home`) |
+| `index.html?page=getting-started` | Getting Started |
+| `index.html?page=guide` | Full Guide |
+| `index.html?page=api` | API Reference |
+| `index.html?page=faq` | FAQ |
+
+## CSS Variables Reference
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--accent` | `#00e5ff` | Primary accent color |
+| `--accent2` | `#7c3aed` | Secondary accent color |
+| `--bg` | `#0d0f14` | Page background |
+| `--bg-surface` | `#13161e` | Sidebar / header background |
+| `--sidebar-w` | `240px` | Sidebar width |
+| `--header-h` | `60px` | Header height |
+
+## Rendered Elements
+
+| Markdown | Rendered as |
+|----------|-------------|
+| `> blockquote` | Info box with accent border |
+| ` ```code``` ` | Code block with copy button |
+| `\| table \|` | Styled data table |
+| `## Heading` | Quick Nav entry (auto-built) |
+  </script>
+
+  <script id="md-faq" type="text/markdown">
+# FAQ
+
+> Answers to the most common questions.
+
+## General
+
+**Is this template free to use?**
+
+Yes — released under the MIT License. Use it freely for personal or commercial projects.
+
+**Do I need a server?**
+
+No. This is a fully static site. Just open `index.html` in any browser — locally or on GitHub Pages — and everything works.
+
+**Where do I edit page content?**
+
+Inside `index.html`, find the `<script id="md-yourpage" type="text/markdown">` block for the page you want to edit and update the Markdown text inside it.
+
+## Deployment
+
+**How long does it take to go live on GitHub Pages?**
+
+Usually under 2 minutes after pushing and enabling Pages in repo Settings.
+
+**Can I use a custom domain?**
+
+Yes. Go to **Settings → Pages → Custom domain**, enter your domain, and add a `CNAME` file to your repo root.
+
+**My changes aren't showing after a push — why?**
+
+GitHub Pages can take 1–3 minutes to rebuild. Try a hard refresh (`Ctrl+Shift+R` / `Cmd+Shift+R`) to bypass the browser cache.
+
+## Customization
+
+**How do I change the colors?**
+
+Edit the `:root` CSS variables at the top of `assets/css/style.css`. Changing `--accent` rethermes the whole site.
+
+**How do I add a new page?**
+
+1. Add a `<script id="md-newpage" type="text/markdown">` block in `index.html`
+2. Add `<a href="?page=newpage" data-page="newpage">` to the header nav and sidebar
+3. Done — no other files needed.
+
+**Can I use HTML inside the Markdown?**
+
+Yes. Marked.js supports inline HTML inside Markdown blocks.
+  </script>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    marked.setOptions({ breaks: true, gfm: true });
+
+    const params     = new URLSearchParams(window.location.search);
+    const page       = params.get('page') || 'home';
+    const mdContent  = document.getElementById('mdContent');
+    const errorEl    = document.getElementById('errorState');
+    const quickNav   = document.getElementById('quickNav');
+    const quickLinks = document.getElementById('quickNavLinks');
+
+    /* ── Mark active nav/sidebar links ── */
+    document.querySelectorAll('[data-page]').forEach(el => {
+      el.classList.toggle('active', el.dataset.page === page);
+    });
+
+    /* ── Read inline MD block ── */
+    const inlineEl = document.getElementById(`md-${page}`);
+    if (!inlineEl) {
+      errorEl.style.display = 'block';
+    } else {
+      const mdText = inlineEl.textContent;
+      mdContent.innerHTML = marked.parse(mdText);
+
+      /* Add IDs to headings */
+      mdContent.querySelectorAll('h1,h2,h3').forEach(h => {
+        h.id = h.textContent.trim()
+          .toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+      });
+
+      /* Wrap <pre> in .code-block with copy button */
+      mdContent.querySelectorAll('pre').forEach(pre => {
+        const wrap = document.createElement('div');
+        wrap.className = 'code-block';
+        const lang = pre.querySelector('code')?.className?.replace('language-','') || '';
+        wrap.innerHTML = `<div class="code-header"><span>${lang}</span><button class="copy-btn" onclick="copyPre(this)">Copy</button></div>`;
+        pre.parentNode.insertBefore(wrap, pre);
+        wrap.appendChild(pre);
+      });
+
+      /* Blockquotes → info-box */
+      mdContent.querySelectorAll('blockquote').forEach(bq => bq.classList.add('info-box'));
+
+      /* Tables */
+      mdContent.querySelectorAll('table').forEach(t => t.classList.add('data-table'));
+
+      /* Build Quick Nav from h2s */
+      const h2s = mdContent.querySelectorAll('h2');
+      if (h2s.length) {
+        quickLinks.innerHTML = Array.from(h2s)
+          .map(h => `<a href="#${h.id}">${h.textContent.replace(/^[\W]+/, '')}</a>`)
+          .join('');
+        const navAs = quickLinks.querySelectorAll('a');
+        h2s.forEach(h => {
+          new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) {
+              navAs.forEach(a => a.classList.remove('qn-active'));
+              quickLinks.querySelector(`a[href="#${h.id}"]`)?.classList.add('qn-active');
+            }
+          }, { rootMargin: '-25% 0px -70% 0px' }).observe(h);
+        });
+      } else {
+        quickNav.style.display = 'none';
+      }
+
+      /* Page title */
+      const h1 = mdContent.querySelector('h1');
+      if (h1) document.title = `${h1.textContent} — MyDocs`;
+    }
+
+    function copyPre(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
