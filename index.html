@@ -6,7 +6,7 @@
   <title>MyDocs</title>
   <link rel="stylesheet" href="assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
@@ -346,82 +346,122 @@ Yes. Marked.js supports inline HTML inside Markdown blocks.
 
   <script src="assets/js/main.js"></script>
   <script>
-    marked.setOptions({ breaks: true, gfm: true });
+document.addEventListener("DOMContentLoaded", function () {
 
-    const params     = new URLSearchParams(window.location.search);
-    const page       = params.get('page') || 'home';
-    const mdContent  = document.getElementById('mdContent');
-    const errorEl    = document.getElementById('errorState');
-    const quickNav   = document.getElementById('quickNav');
-    const quickLinks = document.getElementById('quickNavLinks');
+  // ✅ Check if marked loaded
+  if (typeof marked === "undefined") {
+    document.getElementById("mdContent").innerHTML =
+      "<p style='color:red'>⚠️ Markdown renderer failed to load</p>";
+    return;
+  }
 
-    /* ── Mark active nav/sidebar links ── */
-    document.querySelectorAll('[data-page]').forEach(el => {
-      el.classList.toggle('active', el.dataset.page === page);
-    });
+  marked.setOptions({ breaks: true, gfm: true });
 
-    /* ── Read inline MD block ── */
-    const inlineEl = document.getElementById(`md-${page}`);
-    if (!inlineEl) {
-      errorEl.style.display = 'block';
-    } else {
-      const mdText = inlineEl.textContent;
-      mdContent.innerHTML = marked.parse(mdText);
+  const params     = new URLSearchParams(window.location.search);
+  const page       = params.get('page') || 'home';
+  const mdContent  = document.getElementById('mdContent');
+  const errorEl    = document.getElementById('errorState');
+  const quickNav   = document.getElementById('quickNav');
+  const quickLinks = document.getElementById('quickNavLinks');
 
-      /* Add IDs to headings */
-      mdContent.querySelectorAll('h1,h2,h3').forEach(h => {
-        h.id = h.textContent.trim()
-          .toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-      });
+  // ✅ Active nav links
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.classList.toggle('active', el.dataset.page === page);
+  });
 
-      /* Wrap <pre> in .code-block with copy button */
-      mdContent.querySelectorAll('pre').forEach(pre => {
-        const wrap = document.createElement('div');
-        wrap.className = 'code-block';
-        const lang = pre.querySelector('code')?.className?.replace('language-','') || '';
-        wrap.innerHTML = `<div class="code-header"><span>${lang}</span><button class="copy-btn" onclick="copyPre(this)">Copy</button></div>`;
-        pre.parentNode.insertBefore(wrap, pre);
-        wrap.appendChild(pre);
-      });
+  // ✅ Load markdown
+  const inlineEl = document.getElementById(`md-${page}`);
 
-      /* Blockquotes → info-box */
-      mdContent.querySelectorAll('blockquote').forEach(bq => bq.classList.add('info-box'));
+  if (!inlineEl) {
+    errorEl.style.display = 'block';
+    mdContent.innerHTML = "";
+    return;
+  }
 
-      /* Tables */
-      mdContent.querySelectorAll('table').forEach(t => t.classList.add('data-table'));
+  const mdText = inlineEl.textContent || "";
 
-      /* Build Quick Nav from h2s */
-      const h2s = mdContent.querySelectorAll('h2');
-      if (h2s.length) {
-        quickLinks.innerHTML = Array.from(h2s)
-          .map(h => `<a href="#${h.id}">${h.textContent.replace(/^[\W]+/, '')}</a>`)
-          .join('');
-        const navAs = quickLinks.querySelectorAll('a');
-        h2s.forEach(h => {
-          new IntersectionObserver(([e]) => {
-            if (e.isIntersecting) {
-              navAs.forEach(a => a.classList.remove('qn-active'));
-              quickLinks.querySelector(`a[href="#${h.id}"]`)?.classList.add('qn-active');
-            }
-          }, { rootMargin: '-25% 0px -70% 0px' }).observe(h);
-        });
-      } else {
-        quickNav.style.display = 'none';
-      }
+  try {
+    mdContent.innerHTML = marked.parse(mdText);
+  } catch (e) {
+    mdContent.innerHTML = "<p style='color:red'>Rendering error</p>";
+    console.error(e);
+    return;
+  }
 
-      /* Page title */
-      const h1 = mdContent.querySelector('h1');
-      if (h1) document.title = `${h1.textContent} — MyDocs`;
-    }
+  // ✅ Add heading IDs
+  mdContent.querySelectorAll('h1,h2,h3').forEach(h => {
+    h.id = h.textContent.trim()
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-');
+  });
 
-    function copyPre(btn) {
-      const pre = btn.closest('.code-block').querySelector('pre');
+  // ✅ Code blocks + copy button
+  mdContent.querySelectorAll('pre').forEach(pre => {
+    const wrap = document.createElement('div');
+    wrap.className = 'code-block';
+
+    const codeEl = pre.querySelector('code');
+    const lang = codeEl?.className?.replace('language-','') || '';
+
+    wrap.innerHTML = `
+      <div class="code-header">
+        <span>${lang}</span>
+        <button class="copy-btn">Copy</button>
+      </div>
+    `;
+
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    wrap.querySelector('.copy-btn').addEventListener('click', () => {
       navigator.clipboard.writeText(pre.innerText).then(() => {
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 2000);
+        const btn = wrap.querySelector('.copy-btn');
+        btn.textContent = "Copied!";
+        setTimeout(() => btn.textContent = "Copy", 2000);
       });
-    }
-  </script>
+    });
+  });
+
+  // ✅ Blockquotes
+  mdContent.querySelectorAll('blockquote')
+    .forEach(bq => bq.classList.add('info-box'));
+
+  // ✅ Tables
+  mdContent.querySelectorAll('table')
+    .forEach(t => t.classList.add('data-table'));
+
+  // ✅ Quick Navigation
+  const h2s = mdContent.querySelectorAll('h2');
+
+  if (h2s.length) {
+    quickLinks.innerHTML = Array.from(h2s)
+      .map(h => `<a href="#${h.id}">${h.textContent.replace(/^[^a-zA-Z0-9]+/, '')}</a>`)
+      .join('');
+
+    const navAs = quickLinks.querySelectorAll('a');
+
+    h2s.forEach(h => {
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          navAs.forEach(a => a.classList.remove('qn-active'));
+          const active = quickLinks.querySelector(`a[href="#${h.id}"]`);
+          if (active) active.classList.add('qn-active');
+        }
+      }, { rootMargin: '-25% 0px -70% 0px' });
+
+      observer.observe(h);
+    });
+  } else {
+    quickNav.style.display = 'none';
+  }
+
+  // ✅ Page title
+  const h1 = mdContent.querySelector('h1');
+  if (h1) document.title = `${h1.textContent} — MyDocs`;
+
+});
+</script>
 
 </body>
 </html>
